@@ -4,17 +4,10 @@ FROM node:14
 # Configuramos el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Argumento que será el Personal Access Token
-ARG GITHUB_PAT
-
-# Configurar Git para que use el token como contraseña.
-RUN git config --global credential.helper 'cache --timeout=3600'
-RUN git config --global credential.username Scardigno1982
-# Clonar el código del repositorio GitHub utilizando el token como contraseña
-RUN echo "machine github.com login Scardigno1982 password $GITHUB_PAT" > ~/.netrc
-
-# Clonar el repositorio privado
-RUN git clone https://github.com/jsm-l/pldatos.git .
+# Clonar el repositorio privado usando SSH
+RUN mkdir -p ~/.ssh && \
+    ssh-keyscan github.com >> ~/.ssh/known_hosts && \
+    git clone git@github.com:jsm-l/pldatos.git .
 
 # Instalar dependencias del proyecto Angular
 RUN npm install
