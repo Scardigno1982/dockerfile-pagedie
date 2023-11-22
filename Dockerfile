@@ -14,7 +14,7 @@ RUN git config --global credential.username Scardigno1982
 RUN echo "machine github.com login Scardigno1982 password $GITHUB_PAT" > ~/.netrc
 
 # Clonar el repositorio privado
-RUN git clone https://github.com/jsm-l/pldatos.git .
+RUN git clone https://Scardigno1982:${GITHUB_PAT}@github.com/jsm-l/pldatos.git .
 
 # Instalar dependencias del proyecto Angular
 RUN npm install
